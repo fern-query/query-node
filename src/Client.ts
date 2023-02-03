@@ -4,8 +4,6 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import { Client as ApiKeyClient } from "./api/resources/apiKey/client/Client";
-import { Client as AuthClient } from "./api/resources/auth/client/Client";
 import { Client as DatabaseClient } from "./api/resources/database/client/Client";
 import { Client as QueryClient } from "./api/resources/query/client/Client";
 
@@ -18,18 +16,6 @@ export declare namespace QueryApiClient {
 
 export class QueryApiClient {
     constructor(private readonly options: QueryApiClient.Options) {}
-
-    #apiKey: ApiKeyClient | undefined;
-
-    public get apiKey(): ApiKeyClient {
-        return (this.#apiKey ??= new ApiKeyClient(this.options));
-    }
-
-    #auth: AuthClient | undefined;
-
-    public get auth(): AuthClient {
-        return (this.#auth ??= new AuthClient(this.options));
-    }
 
     #database: DatabaseClient | undefined;
 

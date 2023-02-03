@@ -1,7 +1,3 @@
-export * as apiKey from "./apiKey";
-export * from "./apiKey/types";
-export * as auth from "./auth";
-export * from "./auth/types";
 export * as commons from "./commons";
 export * from "./commons/types";
 export * as database from "./database";
@@ -9,7 +5,5 @@ export * from "./database/types";
 export * as query from "./query";
 export * from "./query/types";
 export * from "./commons/errors";
-export * from "./apiKey/client/requests";
-export * from "./auth/client/requests";
 export * from "./database/client/requests";
 export * from "./query/client/requests";

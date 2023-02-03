@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/query",
-    "version": "0.0.39",
+    "version": "0.0.40",
     "repository": "https://github.com/fern-query/query-node",
     "files": [
         "dist",

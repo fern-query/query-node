@@ -3,15 +3,16 @@
  */
 
 import * as environments from "../../../../environments";
+import * as core from "../../../../core";
 import { QueryApi } from "@fern-api/query";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
-import * as core from "../../../../core";
 import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
         environment?: environments.QueryApiEnvironment | string;
+        token?: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -26,6 +27,9 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/queries"),
             method: "POST",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
             body: await serializers.CreateQueryRequest.json(request),
         });
         if (_response.ok) {
@@ -72,6 +76,9 @@ export class Client {
                 `/v1/queries/${queryId}`
             ),
             method: "GET",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
         });
         if (_response.ok) {
             return await serializers.Query.parse(_response.body as serializers.Query.Raw);
@@ -132,6 +139,9 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/queries"),
             method: "GET",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
             queryParameters: _queryParams,
         });
         if (_response.ok) {
@@ -179,6 +189,9 @@ export class Client {
                 `/v1/queries/${queryId}`
             ),
             method: "PATCH",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
             body: await serializers.UpdateQueryRequest.json(request),
         });
         if (_response.ok) {
@@ -227,6 +240,9 @@ export class Client {
                 `/v1/queries/${queryId}`
             ),
             method: "POST",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
         });
         if (_response.ok) {
             return await serializers.Query.parse(_response.body as serializers.Query.Raw);

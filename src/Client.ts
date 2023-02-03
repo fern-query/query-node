@@ -3,6 +3,7 @@
  */
 
 import * as environments from "./environments";
+import * as core from "./core";
 import { Client as ApiKeyClient } from "./api/resources/apiKey/client/Client";
 import { Client as AuthClient } from "./api/resources/auth/client/Client";
 import { Client as DatabaseClient } from "./api/resources/database/client/Client";
@@ -11,6 +12,7 @@ import { Client as QueryClient } from "./api/resources/query/client/Client";
 export declare namespace QueryApiClient {
     interface Options {
         environment?: environments.QueryApiEnvironment | string;
+        token?: core.Supplier<core.BearerToken>;
     }
 }
 

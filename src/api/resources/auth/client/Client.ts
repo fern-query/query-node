@@ -3,15 +3,16 @@
  */
 
 import * as environments from "../../../../environments";
+import * as core from "../../../../core";
 import { QueryApi } from "@fern-api/query";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
-import * as core from "../../../../core";
 import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
         environment?: environments.QueryApiEnvironment | string;
+        token?: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -31,6 +32,9 @@ export class Client {
                 "/ajax/auth/login/email"
             ),
             method: "POST",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
             queryParameters: _queryParams,
             body: await serializers.LoginWithEmailRequest.json(_body),
         });
@@ -67,6 +71,9 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/auth/recycle"),
             method: "POST",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
             body: await serializers.RecycleRequest.json(request),
         });
         if (_response.ok) {
@@ -107,6 +114,9 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/auth/user"),
             method: "GET",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
         });
         if (_response.ok) {
             return await serializers.auth.getUser.Response.parse(

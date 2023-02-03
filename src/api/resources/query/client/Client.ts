@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
-        environment: environments.QueryApiEnvironment | string;
+        environment?: environments.QueryApiEnvironment | string;
     }
 }
 
@@ -24,7 +24,7 @@ export class Client {
      */
     public async create(request: QueryApi.CreateQueryRequest): Promise<QueryApi.Query> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/v1/queries"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/queries"),
             method: "POST",
             body: await serializers.CreateQueryRequest.json(request),
         });
@@ -67,7 +67,10 @@ export class Client {
      */
     public async get(queryId: string): Promise<QueryApi.Query> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/v1/queries/${queryId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/v1/queries/${queryId}`
+            ),
             method: "GET",
         });
         if (_response.ok) {
@@ -127,7 +130,7 @@ export class Client {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/v1/queries"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/queries"),
             method: "GET",
             queryParameters: _queryParams,
         });
@@ -171,7 +174,10 @@ export class Client {
      */
     public async update(queryId: string, request: QueryApi.UpdateQueryRequest): Promise<QueryApi.Query> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/v1/queries/${queryId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/v1/queries/${queryId}`
+            ),
             method: "PATCH",
             body: await serializers.UpdateQueryRequest.json(request),
         });
@@ -216,7 +222,10 @@ export class Client {
      */
     public async delete(queryId: string): Promise<QueryApi.Query> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/v1/queries/${queryId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/v1/queries/${queryId}`
+            ),
             method: "POST",
         });
         if (_response.ok) {

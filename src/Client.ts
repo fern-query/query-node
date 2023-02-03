@@ -10,7 +10,7 @@ import { Client as QueryClient } from "./api/resources/query/client/Client";
 
 export declare namespace QueryApiClient {
     interface Options {
-        environment: environments.QueryApiEnvironment | string;
+        environment?: environments.QueryApiEnvironment | string;
     }
 }
 

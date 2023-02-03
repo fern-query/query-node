@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
-        environment: environments.QueryApiEnvironment | string;
+        environment?: environments.QueryApiEnvironment | string;
     }
 }
 
@@ -24,7 +24,7 @@ export class Client {
      */
     public async create(request: QueryApi.CreateDatabaseRequest): Promise<QueryApi.Database> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/v1/databases"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/databases"),
             method: "POST",
             body: await serializers.CreateDatabaseRequest.json(request),
         });
@@ -67,7 +67,10 @@ export class Client {
      */
     public async get(databaseId: string): Promise<QueryApi.Database> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/v1/databases/${databaseId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/v1/databases/${databaseId}`
+            ),
             method: "GET",
         });
         if (_response.ok) {
@@ -127,7 +130,7 @@ export class Client {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/v1/databases"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/v1/databases"),
             method: "GET",
             queryParameters: _queryParams,
         });
@@ -188,7 +191,10 @@ export class Client {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/v1/databases/public"),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                "/v1/databases/public"
+            ),
             method: "GET",
             queryParameters: _queryParams,
         });
@@ -232,7 +238,10 @@ export class Client {
      */
     public async update(databaseId: string, request: QueryApi.UpdateDatabaseRequest): Promise<QueryApi.Database> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/v1/databases/${databaseId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/v1/databases/${databaseId}`
+            ),
             method: "PATCH",
             body: await serializers.UpdateDatabaseRequest.json(request),
         });

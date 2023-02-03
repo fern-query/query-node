@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
-        environment: environments.QueryApiEnvironment | string;
+        environment?: environments.QueryApiEnvironment | string;
     }
 }
 
@@ -20,7 +20,7 @@ export class Client {
 
     public async create(request: QueryApi.CreateApiKeyRequest): Promise<QueryApi.ApiKey> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/ajax/apikeys"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/apikeys"),
             method: "POST",
             body: await serializers.CreateApiKeyRequest.json(request),
         });
@@ -70,7 +70,7 @@ export class Client {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/ajax/apikeys"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/apikeys"),
             method: "GET",
             queryParameters: _queryParams,
         });
@@ -105,7 +105,10 @@ export class Client {
      */
     public async update(apiKeyId: string, request: QueryApi.UpdateApiKeyRequest): Promise<QueryApi.ApiKey> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/ajax/apikeys/${apiKeyId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/ajax/apikeys/${apiKeyId}`
+            ),
             method: "PATCH",
             body: await serializers.UpdateApiKeyRequest.json(request),
         });
@@ -145,7 +148,10 @@ export class Client {
      */
     public async roll(apiKeyId: string): Promise<QueryApi.ApiKey> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/ajax/apikeys/${apiKeyId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/ajax/apikeys/${apiKeyId}`
+            ),
             method: "POST",
         });
         if (_response.ok) {
@@ -184,7 +190,10 @@ export class Client {
      */
     public async delete(apiKeyId: string): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, `/ajax/apikeys/${apiKeyId}`),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                `/ajax/apikeys/${apiKeyId}`
+            ),
             method: "DELETE",
         });
         if (_response.ok) {

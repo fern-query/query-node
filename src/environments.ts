@@ -3,9 +3,9 @@
  */
 
 export const QueryApiEnvironment = {
-    Production: "https://api.query.co/v1",
-    Staging: "https://staging-api.query.co/v1",
-    Develop: "http://localhost:7000/v1",
+    Production: "https://api.query.co/api",
+    Staging: "https://staging-api.query.co/api",
+    Develop: "http://localhost:7000/api",
 } as const;
 
 export type QueryApiEnvironment =

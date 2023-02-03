@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Client {
     interface Options {
-        environment: environments.QueryApiEnvironment | string;
+        environment?: environments.QueryApiEnvironment | string;
     }
 }
 
@@ -26,7 +26,10 @@ export class Client {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/ajax/auth/login/email"),
+            url: urlJoin(
+                this.options.environment ?? environments.QueryApiEnvironment.Production,
+                "/ajax/auth/login/email"
+            ),
             method: "POST",
             queryParameters: _queryParams,
             body: await serializers.LoginWithEmailRequest.json(_body),
@@ -62,7 +65,7 @@ export class Client {
      */
     public async recycle(request: QueryApi.RecycleRequest): Promise<QueryApi.RecycleResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/ajax/auth/recycle"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/auth/recycle"),
             method: "POST",
             body: await serializers.RecycleRequest.json(request),
         });
@@ -102,7 +105,7 @@ export class Client {
      */
     public async getUser(): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, "/ajax/auth/user"),
+            url: urlJoin(this.options.environment ?? environments.QueryApiEnvironment.Production, "/ajax/auth/user"),
             method: "GET",
         });
         if (_response.ok) {
